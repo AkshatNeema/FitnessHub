@@ -3,6 +3,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 // Validation schema
@@ -22,6 +23,7 @@ const schema = yup.object().shape({
     .matches(/[a-z]/, 'Must contain at least one lowercase letter')
     .matches(/[0-9]/, 'Must contain at least one number')
     .matches(/[!@#$%^&*]/, 'Must contain at least one special character'),
+
 });
 
 export default function Signup() {
@@ -33,6 +35,7 @@ export default function Signup() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+    const navigate = useNavigate();
 
   // const onSubmit = (data) => {
   //   console.log(data);
@@ -56,6 +59,7 @@ export default function Signup() {
       if (response.ok) {
         alert('Signup successful!');
         reset();
+        navigate("/login"); // redirect to landing page
       } else {
         alert(`Error: ${result.message}`);
       }

@@ -1,48 +1,16 @@
-// // src/pages/Login.jsx
-// import { useState } from "react";
 
-// export default function Login() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const handleLogin = (e) => {
-//     e.preventDefault();
-//     console.log("Logging in with:", { email, password });
-//     // TODO: send to backend
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center min-h-screen w-screen bg-gradient-to-br from-green-100 to-green-200">
-//       <form className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" onSubmit={handleLogin}>
-//         <h2 className="text-2xl font-bold mb-6 text-center text-green-700">Login</h2>
-//         <div className="mb-4">
-//           <label className="block text-gray-700 font-semibold mb-1">Email:</label>
-//           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-//             className="w-full px-3 py-2 border rounded" required />
-//         </div>
-//         <div className="mb-4">
-//           <label className="block text-gray-700 font-semibold mb-1">Password:</label>
-//           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-//             className="w-full px-3 py-2 border rounded" required />
-//         </div>
-//         <button type="submit" className="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700">
-//           Login
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-// src/pages/Login.jsx
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
+
 import * as yup from 'yup';
 
 const loginSchema = yup.object().shape({
   email: yup.string().email('Enter a valid email').required('Email is required'),
   password: yup.string().required('Password is required'),
 });
+
 
 export default function Login() {
   const {
@@ -53,6 +21,7 @@ export default function Login() {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
+  const navigate = useNavigate();
 
   // const onSubmit = (data) => {
   //   console.log(data);
@@ -72,11 +41,11 @@ export default function Login() {
       const result = await response.json();
 
       if (response.ok) {
-
         // After successful login
-        localStorage.setItem("user", JSON.stringify(data.user)); // assume backend sends user object
+        localStorage.setItem("user", JSON.stringify(result.user)); // assume backend sends user object
         alert("Login successful!");
         navigate("/"); // redirect to landing page
+        window.location.reload(); //refreshs the page
         reset();
       } else {
         alert(`Error: ${result.message}`);
