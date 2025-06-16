@@ -5,7 +5,6 @@
   "main": "eslint.config.js",
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
-    "@vitejs/plugin-react": "^4.5.0",
     "acorn": "^8.14.1",
     "acorn-jsx": "^5.3.2",
     "ajv": "^6.12.6",
@@ -153,6 +152,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.5.2",
     "vite": "^6.3.5"
   }
 }
